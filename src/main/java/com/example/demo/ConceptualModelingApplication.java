@@ -8,9 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.demo.domain.Category;
+import com.example.demo.domain.City;
 import com.example.demo.domain.Product;
+import com.example.demo.domain.State;
 import com.example.demo.repositories.CategoryRepository;
+import com.example.demo.repositories.CityRepository;
 import com.example.demo.repositories.ProductRepository;
+import com.example.demo.repositories.StateRepository;
 
 @SpringBootApplication
 public class ConceptualModelingApplication implements CommandLineRunner {
@@ -19,6 +23,10 @@ public class ConceptualModelingApplication implements CommandLineRunner {
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private StateRepository stateRepository;
+	@Autowired
+	private CityRepository cityRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConceptualModelingApplication.class, args);
@@ -42,11 +50,19 @@ public class ConceptualModelingApplication implements CommandLineRunner {
 		p3.getCategories().addAll(Arrays.asList(cat1));
 		
 		
-		categoryRepository.save(cat1);
-		categoryRepository.save(cat2);
-		productRepository.save(p1);
-		productRepository.save(p2);
-		productRepository.save(p3);
+		categoryRepository.saveAll((Iterable<Category>) Arrays.asList(cat1,cat2));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		
+		State state1 = new State(null, "Minas Gerais");
+		State state2 = new State(null, "São Paulo");
+		
+		City city1 = new City(null, "Uberlândia", state1);
+		City city2 = new City(null, "São Paulo", state2);
+		City city3 = new City(null, "Campinas", state2);
+		
+		
+		stateRepository.saveAll(Arrays.asList(state1, state2));
+		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 		
 	}
 

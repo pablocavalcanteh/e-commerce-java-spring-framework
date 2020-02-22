@@ -27,7 +27,6 @@ public class City implements Serializable {
 		
 	}
 
-
 	public City(Integer id, String name, State state) {
 		super();
 		this.id = id;
@@ -35,36 +34,29 @@ public class City implements Serializable {
 		this.state = state;
 	}
 
-
 	public Integer getId() {
 		return id;
 	}
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
 	public String getName() {
 		return name;
 	}
-
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
 	public State getState() {
 		return state;
 	}
 
-
 	public void setState(State state) {
 		this.state = state;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -73,7 +65,6 @@ public class City implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {

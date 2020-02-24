@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.example.demo.domain.Address;
 import com.example.demo.domain.Category;
 import com.example.demo.domain.City;
 import com.example.demo.domain.Client;
+import com.example.demo.domain.Order;
+import com.example.demo.domain.Payment;
+import com.example.demo.domain.PaymentWithBillet;
+import com.example.demo.domain.PaymentWithCard;
 import com.example.demo.domain.Product;
 import com.example.demo.domain.State;
 import com.example.demo.domain.enums.ClientType;
+import com.example.demo.domain.enums.PaymentStatus;
 import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.CityRepository;
 import com.example.demo.repositories.ClientRepository;
+import com.example.demo.repositories.OrderRepository;
+import com.example.demo.repositories.PaymentRepository;
 import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.StateRepository;
 
@@ -36,6 +44,10 @@ public class ConceptualModelingApplication implements CommandLineRunner {
 	private ClientRepository clientRepository;
 	@Autowired
 	private AddressRepository addressRepository;
+	@Autowired
+	private OrderRepository orderRepository;
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConceptualModelingApplication.class, args);
@@ -71,7 +83,7 @@ public class ConceptualModelingApplication implements CommandLineRunner {
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 
-		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", ClientType.PESSOAFISICA);
+		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", ClientType.PHYSICALPERSON);
 
 		cli1.getPhones().addAll(Arrays.asList("27363323", "9383839"));
 
@@ -82,7 +94,23 @@ public class ConceptualModelingApplication implements CommandLineRunner {
 
 		clientRepository.saveAll(Arrays.asList(cli1));
 		addressRepository.saveAll(Arrays.asList(address1, address2));
-
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		
+		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli1, address1);
+		Order order2 = new Order(null, sdf.parse("10/10/2017 19:35"), cli1, address2);
+		
+		Payment payment1 = new PaymentWithCard(null, PaymentStatus.SETTLED, order1, 6);
+		order1.setPayment(payment1);
+		Payment payment2 = new PaymentWithBillet(null, PaymentStatus.PENDING, order2, sdf.parse("20/10/2017 00:00"), null);
+		order2.setPayment(payment2);
+		
+		cli1.getOrders().addAll(Arrays.asList(order1, order2));
+		
+		
+		orderRepository.saveAll(Arrays.asList(order1, order2));
+		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
 	}
 
 }

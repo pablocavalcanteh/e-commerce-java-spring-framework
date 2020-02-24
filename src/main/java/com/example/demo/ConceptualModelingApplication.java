@@ -12,6 +12,7 @@ import com.example.demo.domain.Address;
 import com.example.demo.domain.Category;
 import com.example.demo.domain.City;
 import com.example.demo.domain.Client;
+import com.example.demo.domain.ItemOrder;
 import com.example.demo.domain.Order;
 import com.example.demo.domain.Payment;
 import com.example.demo.domain.PaymentWithBillet;
@@ -24,6 +25,7 @@ import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.CityRepository;
 import com.example.demo.repositories.ClientRepository;
+import com.example.demo.repositories.ItemOrderRepository;
 import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.PaymentRepository;
 import com.example.demo.repositories.ProductRepository;
@@ -48,6 +50,8 @@ public class ConceptualModelingApplication implements CommandLineRunner {
 	private OrderRepository orderRepository;
 	@Autowired
 	private PaymentRepository paymentRepository;
+	@Autowired
+	private ItemOrderRepository itemOrderRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConceptualModelingApplication.class, args);
@@ -111,6 +115,22 @@ public class ConceptualModelingApplication implements CommandLineRunner {
 		
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
+		
+		ItemOrder itemOrder = new ItemOrder(order1, p1, 0.00, 1, 2000.00);
+		ItemOrder itemOrder2 = new ItemOrder(order1, p3, 0.00, 2, 80.00);
+		ItemOrder itemOrder3 = new ItemOrder(order2, p2, 100.00, 1, 800.00);
+		
+		order1.getItens().addAll(Arrays.asList(itemOrder, itemOrder2, itemOrder3));
+		order2.getItens().addAll(Arrays.asList(itemOrder2));
+		
+		p1.getItens().addAll(Arrays.asList(itemOrder));
+		p2.getItens().addAll(Arrays.asList(itemOrder3));
+		p3.getItens().addAll(Arrays.asList(itemOrder2));
+		
+		itemOrderRepository.saveAll(Arrays.asList(itemOrder, itemOrder2, itemOrder3));
+		
+		
+		
 	}
 
 }

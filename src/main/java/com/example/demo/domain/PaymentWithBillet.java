@@ -8,7 +8,7 @@ import com.example.demo.domain.enums.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class PaymentWithBillet extends Payment	 {
+public class PaymentWithBillet extends Payment {
 
 	private static final long serialVersionUID = 1L;
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -19,8 +19,8 @@ public class PaymentWithBillet extends Payment	 {
 	public PaymentWithBillet() {
 	}
 
-	public PaymentWithBillet(Integer id, PaymentStatus status, Order order, Date dueDate, Date paymentDate) {
-		super(id, status, order);
+	public PaymentWithBillet(Integer id, PaymentStatus status, Pedido pedido, Date dueDate, Date paymentDate) {
+		super(id, status, pedido);
 		this.dueDate = dueDate;
 		this.paymentDate =paymentDate;
 	}

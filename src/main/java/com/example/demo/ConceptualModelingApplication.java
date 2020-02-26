@@ -13,7 +13,7 @@ import com.example.demo.domain.Category;
 import com.example.demo.domain.City;
 import com.example.demo.domain.Client;
 import com.example.demo.domain.ItemOrder;
-import com.example.demo.domain.Order;
+import com.example.demo.domain.Pedido;
 import com.example.demo.domain.Payment;
 import com.example.demo.domain.PaymentWithBillet;
 import com.example.demo.domain.PaymentWithCard;
@@ -102,8 +102,8 @@ public class ConceptualModelingApplication implements CommandLineRunner {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		
-		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli1, address1);
-		Order order2 = new Order(null, sdf.parse("10/10/2017 19:35"), cli1, address2);
+		Pedido order1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, address1);
+		Pedido order2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, address2);
 		
 		Payment payment1 = new PaymentWithCard(null, PaymentStatus.SETTLED, order1, 6);
 		order1.setPayment(payment1);
@@ -127,7 +127,7 @@ public class ConceptualModelingApplication implements CommandLineRunner {
 		p2.getItens().addAll(Arrays.asList(itemOrder3));
 		p3.getItens().addAll(Arrays.asList(itemOrder2));
 		
-		itemOrderRepository.saveAll(Arrays.asList(itemOrder, itemOrder2, itemOrder3));
+		itemOrderRepository.saveAll((Iterable<ItemOrder>) Arrays.asList(itemOrder, itemOrder2, itemOrder3));
 		
 		
 		

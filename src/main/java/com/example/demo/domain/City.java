@@ -20,7 +20,6 @@ public class City implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="state_id")
 	private State state;

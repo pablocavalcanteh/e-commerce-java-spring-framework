@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+import com.example.demo.domain.Pedido;
 @Embeddable
 public class ItemOrderPK implements Serializable {
 
@@ -13,17 +13,17 @@ public class ItemOrderPK implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name= "order_id")
-	private Order order;
+	private Pedido order;
 	@ManyToOne
 	@JoinColumn(name= "product_id")
 	private Product product;
 	
-	public Order getOrder() {
+	public Pedido getOrder() {
 		return order;
 	}
 	
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrder(Pedido pedido) {
+		this.order = pedido;
 	}
 	
 	public Product getProduct() {

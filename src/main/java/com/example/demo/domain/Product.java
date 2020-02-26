@@ -29,7 +29,7 @@ public class Product implements Serializable {
 	private Double price;
 	
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA",
 	joinColumns = @JoinColumn(name= "product_id"),
@@ -50,13 +50,13 @@ public class Product implements Serializable {
 	}
 	
 	@JsonIgnore
-	public List<Order> getOrders() {
-		List<Order> orders = new ArrayList<>();
+	public List<Pedido> getOrders() {
+		List<Pedido> pedidos = new ArrayList<>();
 		for(ItemOrder x : itens) {
-			orders.add(x.getOrder());
+			pedidos.add(x.getOrder());
 		}
 		
-		return orders;
+		return pedidos;
 	}
 
 	public Integer getId() {

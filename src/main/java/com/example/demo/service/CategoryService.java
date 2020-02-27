@@ -25,5 +25,10 @@ public class CategoryService {
 		obj.setId(null);
 		return repo.save(obj);
 	}
+	
+	public Category update(Category obj) {
+		find(obj.getId());
+		return repo.save(obj);
+	}
 
 }

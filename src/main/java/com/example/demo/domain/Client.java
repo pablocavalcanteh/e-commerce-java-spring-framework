@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+	package com.example.demo.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class Client implements Serializable {
 		this.name = name;
 		this.email = email;
 		this.cpfOrCnpj = cpfOrCnpj;
-		this.clientType = clientType.getCod();
+		this.clientType = (clientType == null) ? null : clientType.getCod();
 	}
 
 	public Integer getId() {

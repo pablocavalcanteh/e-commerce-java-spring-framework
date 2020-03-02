@@ -9,9 +9,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.domain.Address;
+import com.example.demo.domain.City;
 import com.example.demo.domain.Client;
 import com.example.demo.domain.DTO.ClientDTO;
+import com.example.demo.domain.DTO.ClientNewDTO;
+import com.example.demo.domain.enums.ClientType;
+import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.ClientRepository;
 import com.example.demo.services.exceptions.DataIntegrityException;
 import com.example.demo.services.exceptions.ObjectNotFounException;
@@ -21,6 +27,16 @@ public class ClientService {
 
 	@Autowired
 	private ClientRepository repo;
+	@Autowired
+	private AddressRepository addressRepository;
+	
+	@Transactional
+	public Client insert(Client obj) {
+		obj.setId(null);
+		obj = repo.save(obj);
+		addressRepository.saveAll(obj.getAddresses());
+		return obj;
+	}
 
 	public Client find(Integer id) {
 		Optional<Client> obj = repo.findById(id);
@@ -57,6 +73,24 @@ public class ClientService {
 
 	public Client conversionFromDtoToClient(ClientDTO objDto) {
 		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null);
+
+	}
+	
+	public Client conversionFromDtoToClient(ClientNewDTO objDto) {
+		Client client1 = new Client(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOrCnpj(), ClientType.toEnum(objDto.getClientType()));
+		City city1 = new City(objDto.getCityId(), null, null);
+		Address address = new Address(null, objDto.getPlace(), objDto.getNumber(), objDto.getComplement(), objDto.getNeighborhood(), objDto.getCep(), client1, city1);
+		client1.getAddresses().add(address);
+		client1.getPhones().add(objDto.getPhone1());
+		
+		if (objDto.getPhone2() != null) {
+			client1.getPhones().add(objDto.getPhone2());
+		}
+		if (objDto.getPhone3() != null) {
+			client1.getPhones().add(objDto.getPhone3());
+		}
+		
+		return client1;
 
 	}
 	

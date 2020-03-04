@@ -15,8 +15,7 @@ public class CategoryDTO implements Serializable{
 	@NotEmpty(message="Mandatory filling")
 	@Length(min=5, max=80, message="The length must be between 5 and 80 characters")
 	private String name;
-	
-	
+		
 	public CategoryDTO() {
 	}
 	

@@ -2,21 +2,37 @@ package com.example.demo.domain.DTO;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.example.demo.service.validation.ClientInsert;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Mandatory filling")
+	@Length(min=5, max=80, message="The length must be between 5 and 80 characters")
 	private String name;
+	@NotEmpty(message="Mandatory filling")
+	@Email(message="Invalid email")
 	private String email;
+	@NotEmpty(message="Mandatory filling")
 	private String cpfOrCnpj;
 	private Integer clientType;
-	
+	@NotEmpty(message="Mandatory filling")
 	private String place;
+	@NotEmpty(message="Mandatory filling")
 	private String number;
 	private String complement;
+	@NotEmpty(message="Mandatory filling")
 	private String neighborhood;
+	@NotEmpty(message="Mandatory filling")
 	private String cep;
-	
+	@NotEmpty(message="Mandatory filling")
 	private String phone1;
 	private String phone2;
 	private String phone3;

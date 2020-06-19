@@ -25,14 +25,15 @@ public class ClientInsertValidation implements ConstraintValidator<ClientInsert,
 	 }
 	 @Override
 	 public boolean isValid(ClientNewDTO objDto, ConstraintValidatorContext context) {
+		 
 	 List<FieldMessage> list = new ArrayList<>();
 	 
 	 if (objDto.getClientType().equals(ClientType.PHYSICALPERSON.getCod()) && !BR.isValidCPF(objDto.getCpfOrCnpj())) {
-		 list.add(new FieldMessage("cnpjOrCnpj", "Invalid CPF")); 
+		 list.add(new FieldMessage("cpfOrCnpj", "Invalid CPF")); 
 	 }
 	 
 	 if (objDto.getClientType().equals(ClientType.LEGALPERSON.getCod()) && !BR.isValidCNPJ(objDto.getCpfOrCnpj())) {
-		 list.add(new FieldMessage("cnpjOrCnpj", "Invalid CNPJ")); 
+		 list.add(new FieldMessage("cpfOrCnpj", "Invalid CNPJ")); 
 	 }
 	 
 	 Client aux = repo.findByEmail(objDto.getEmail());
@@ -41,8 +42,6 @@ public class ClientInsertValidation implements ConstraintValidator<ClientInsert,
 		 list.add(new FieldMessage("email", "Existing email"));
 	 }
 	 
-	 
-
 	 for (FieldMessage e : list) {
 	 context.disableDefaultConstraintViolation();
 	 context.buildConstraintViolationWithTemplate(e.getMessage())

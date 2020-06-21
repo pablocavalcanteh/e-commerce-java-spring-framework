@@ -108,8 +108,23 @@ public class ItemOrder implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append( getProduct().getName());
+		builder.append(", Qte: ");
+		builder.append(getAmount());
+		builder.append(", Preço unitário: ");
+		builder.append(getPrice());
+		builder.append(", Subtotal: ");
+		builder.append(getSubTotal());
+		builder.append("\n");
+		
+		return builder.toString();
+	}
 	
 	
-	
+
 	
 }

@@ -92,11 +92,11 @@ public class Client implements Serializable {
 		this.clientType = clientType.getCod();
 	}
 
-	public List<Address> getAdresses() {
+	public List<Address> getAddresses() {
 		return addresses;
 	}
 
-	public void setAdresses(List<Address> adresses) {
+	public void setAddresses(List<Address> adresses) {
 		this.addresses = adresses;
 	}
 
@@ -106,14 +106,6 @@ public class Client implements Serializable {
 
 	public void setPhones(Set<String> phones) {
 		this.phones = phones;
-	}
-
-	public List<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(List<Address> addresses) {
-		this.addresses = addresses;
 	}
 
 	public List<Pedido> getOrders() {

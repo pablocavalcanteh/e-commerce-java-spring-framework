@@ -117,7 +117,7 @@ public class DBService {
 		Address address1 = new Address(null, "Rua das Flores", "300", "Apto 303", "Jardim", "38220834", cli1, city1);
 		Address address2 = new Address(null, "Av. Matos", "105", "Sala 800", "Centro", "387770012", cli1, city2);
 
-		cli1.getAdresses().addAll(Arrays.asList(address1, address2));
+		cli1.getAddresses().addAll(Arrays.asList(address1, address2));
 
 		clientRepository.saveAll(Arrays.asList(cli1));
 		addressRepository.saveAll(Arrays.asList(address1, address2));

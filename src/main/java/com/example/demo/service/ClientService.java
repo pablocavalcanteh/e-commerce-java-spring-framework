@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,9 @@ import com.example.demo.services.exceptions.ObjectNotFounException;
 
 @Service
 public class ClientService {
-
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
 	private ClientRepository repo;
 	@Autowired
@@ -72,12 +75,12 @@ public class ClientService {
 	}
 
 	public Client conversionFromDtoToClient(ClientDTO objDto) {
-		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null);
+		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null, null);
 
 	}
 	
 	public Client conversionFromDtoToClient(ClientNewDTO objDto) {
-		Client client1 = new Client(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOrCnpj(), ClientType.toEnum(objDto.getClientType()));
+		Client client1 = new Client(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOrCnpj(), ClientType.toEnum(objDto.getClientType()), bCryptPasswordEncoder.encode(objDto.getPassword()));
 		City city1 = new City(objDto.getCityId(), null, null);
 		Address address = new Address(null, objDto.getPlace(), objDto.getNumber(), objDto.getComplement(), objDto.getNeighborhood(), objDto.getCep(), client1, city1);
 		client1.getAddresses().add(address);

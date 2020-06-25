@@ -24,6 +24,8 @@ public class ClientNewDTO implements Serializable {
 	private String cpfOrCnpj;
 	private Integer clientType;
 	@NotEmpty(message="Mandatory filling")
+	private String password;
+	@NotEmpty(message="Mandatory filling")
 	private String place;
 	@NotEmpty(message="Mandatory filling")
 	private String number;
@@ -144,6 +146,14 @@ public class ClientNewDTO implements Serializable {
 
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }

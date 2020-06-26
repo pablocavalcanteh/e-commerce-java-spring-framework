@@ -21,6 +21,7 @@ import com.example.demo.domain.Product;
 import com.example.demo.domain.State;
 import com.example.demo.domain.enums.ClientType;
 import com.example.demo.domain.enums.PaymentStatus;
+import com.example.demo.domain.enums.Profile;
 import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.CityRepository;
@@ -113,17 +114,23 @@ public class DBService {
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 
-		Client cli1 = new Client(null, "Maria Silva", "devphcavalcante@gmail.com", "36378912377", ClientType.PHYSICALPERSON, bCryptPasswordEncoder.encode("12345"));
-
+		Client cli1 = new Client(null, "Maria Silva", "devphcavalcante@gmail.com", "36378912377", ClientType.PHYSICALPERSON, bCryptPasswordEncoder.encode("123456"));
 		cli1.getPhones().addAll(Arrays.asList("27363323", "9383839"));
+		
+		Client cli2 = new Client(null, "Ana Costa", "devphcavalcante@gmail.com", "45400198058", ClientType.PHYSICALPERSON, bCryptPasswordEncoder.encode("123456"));
+		cli2.getPhones().addAll(Arrays.asList("93456678", "789541559"));
+		cli2.addProfile(Profile.ADMIN);
 
 		Address address1 = new Address(null, "Rua das Flores", "300", "Apto 303", "Jardim", "38220834", cli1, city1);
 		Address address2 = new Address(null, "Av. Matos", "105", "Sala 800", "Centro", "387770012", cli1, city2);
+		Address address3 = new Address(null, "Av. Matos", "105", "Sala 800", "Centro", "387770012", cli2, city2);
 
 		cli1.getAddresses().addAll(Arrays.asList(address1, address2));
+		cli2.getAddresses().addAll(Arrays.asList(address3));
 
-		clientRepository.saveAll(Arrays.asList(cli1));
-		addressRepository.saveAll(Arrays.asList(address1, address2));
+
+		clientRepository.saveAll(Arrays.asList(cli1, cli2));
+		addressRepository.saveAll(Arrays.asList(address1, address2, address3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		

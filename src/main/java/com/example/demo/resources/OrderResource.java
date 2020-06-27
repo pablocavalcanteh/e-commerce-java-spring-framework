@@ -32,7 +32,7 @@ public class OrderResource {
 		
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, consumes= {"application/json"})
+	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
 		
 		obj = service.insert(obj);

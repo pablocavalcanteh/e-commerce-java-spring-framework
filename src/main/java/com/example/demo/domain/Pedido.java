@@ -31,7 +31,6 @@ public class Pedido implements Serializable {
 	private Integer id;
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instant;
-	@JsonIgnore
 	@OneToOne(cascade=CascadeType.ALL, mappedBy= "pedido")
 	private Payment payment;
 	@ManyToOne

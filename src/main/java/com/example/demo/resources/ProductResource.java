@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.domain.Category;
-import com.example.demo.domain.Pedido;
 import com.example.demo.domain.Product;
-import com.example.demo.domain.DTO.CategoryDTO;
 import com.example.demo.domain.DTO.ProductDTO;
 import com.example.demo.resources.utils.URL;
 import com.example.demo.service.ProductService;

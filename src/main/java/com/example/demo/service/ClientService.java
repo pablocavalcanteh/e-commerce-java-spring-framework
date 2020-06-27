@@ -18,8 +18,11 @@ import com.example.demo.domain.Client;
 import com.example.demo.domain.DTO.ClientDTO;
 import com.example.demo.domain.DTO.ClientNewDTO;
 import com.example.demo.domain.enums.ClientType;
+import com.example.demo.domain.enums.Profile;
 import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.ClientRepository;
+import com.example.demo.security.UserSpringSecurity;
+import com.example.demo.services.exceptions.AuthorizationException;
 import com.example.demo.services.exceptions.DataIntegrityException;
 import com.example.demo.services.exceptions.ObjectNotFounException;
 
@@ -42,6 +45,13 @@ public class ClientService {
 	}
 
 	public Client find(Integer id) {
+		
+		UserSpringSecurity user = UserService.authenticated();
+		if (user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			
+			throw new AuthorizationException("Danied access!");
+		}
+		
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFounException(
 				"Object not found Id: " + id + ", Tipo: " + Client.class.getName(), null));

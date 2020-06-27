@@ -4,9 +4,12 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.Category;
+import com.example.demo.domain.Client;
 import com.example.demo.domain.ItemOrder;
 import com.example.demo.domain.PaymentWithBillet;
 import com.example.demo.domain.Pedido;
@@ -15,6 +18,8 @@ import com.example.demo.repositories.ItemOrderRepository;
 import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.PaymentRepository;
 import com.example.demo.repositories.ProductRepository;
+import com.example.demo.security.UserSpringSecurity;
+import com.example.demo.services.exceptions.AuthorizationException;
 import com.example.demo.services.exceptions.ObjectNotFounException;
 
 @Service
@@ -77,6 +82,21 @@ public class OrderService {
 		itemOrderRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
+	}
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		
+		UserSpringSecurity user = UserService.authenticated();
+		if( user == null) {
+			
+			throw new AuthorizationException("Danied access!");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf( direction), orderBy);
+		Client cli = clientService.find(user.getId());
+		
+		return repo.findByClient(cli, pageRequest);
+		
+		
 	}
 
 }

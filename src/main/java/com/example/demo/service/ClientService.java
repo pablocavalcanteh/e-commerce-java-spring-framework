@@ -118,6 +118,18 @@ public class ClientService {
 	
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
 		
-		return s3Service.uploadFile(multipartFile);
+		UserSpringSecurity user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Danied Access!");
+		}
+		
+		URI uri = s3Service.uploadFile(multipartFile);
+		
+		Optional<Client> cli = repo.findById(user.getId());
+		cli.get().setImageUrl(uri.toString());
+		repo.save(cli.get());
+		
+		
+		return uri;
 	}
 }

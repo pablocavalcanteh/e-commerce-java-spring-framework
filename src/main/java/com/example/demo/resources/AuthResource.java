@@ -19,10 +19,10 @@ import com.example.demo.service.UserService;
 @RestController
 @RequestMapping(value = "/auth")
 public class AuthResource {
-	
+
 	@Autowired
-	private JWTUtil	jwtUtil;
-	
+	private JWTUtil jwtUtil;
+
 	@Autowired
 	private AuthService service;
 
@@ -31,9 +31,10 @@ public class AuthResource {
 		UserSpringSecurity user = UserService.authenticated();
 		String token = jwtUtil.generateToken(user.getUsername());
 		response.addHeader("Authorization", "Bearer " + token);
+		response.addHeader("access-control-expose-headers", "Authorization");
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
 	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO objDto) {
 		service.sendNewPassword(objDto.getEmail());

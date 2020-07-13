@@ -19,9 +19,13 @@ public class URL {
 	
 	
 	public static List<Integer> decodeIntList(String s) {
-		
-		String[] vet = s.split(",");
 		List<Integer> list = new ArrayList<Integer>();
+		
+		if (s.equals("")) {
+			return list;
+		}
+		String[] vet = s.split(",");
+		
 		
 		for(int i = 0; i < vet.length; i++) {
 			

@@ -39,7 +39,10 @@ public class ProductResource {
 			                                          @RequestParam(value="direction", defaultValue="ASC") String direction
 			                                          ) {
 		String nameDecoded = URL.decodeParam(name);
+		
 		List<Integer> ids = URL.decodeIntList(categories);
+		
+		
 		Page<Product> list = service.search(nameDecoded, ids, page, linesPerPage, orderBy, direction);
 		Page<ProductDTO> listDto = list.map(obj -> new ProductDTO(obj));
 		return  ResponseEntity.ok().body(listDto);	

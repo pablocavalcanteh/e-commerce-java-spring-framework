@@ -11,6 +11,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.example.demo.domain.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
@@ -23,6 +26,8 @@ public abstract class Payment implements Serializable {
 	@Id
 	private Integer id;
 	private Integer status;
+	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="order_id")
 	@MapsId
@@ -53,13 +58,6 @@ public abstract class Payment implements Serializable {
 		this.status = status.getCode();
 	}
 
-	public Pedido getOrder() {
-		return pedido;
-	}
-
-	public void setOrder(Pedido pedido) {
-		this.pedido = pedido;
-	}
 
 	@Override
 	public int hashCode() {
@@ -84,6 +82,11 @@ public abstract class Payment implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public void setOrder(Pedido obj) {
+		this.pedido = obj;
+		
 	}
 		
 }

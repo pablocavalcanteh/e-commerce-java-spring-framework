@@ -228,7 +228,7 @@ public class DBService {
 				null);
 		order2.setPayment(payment2);
 
-		cli1.getOrders().addAll(Arrays.asList(order1, order2));
+		cli1.getPedidos().addAll(Arrays.asList(order1, order2));
 
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));

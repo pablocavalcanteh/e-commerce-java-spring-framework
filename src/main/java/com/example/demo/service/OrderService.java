@@ -50,7 +50,7 @@ public class OrderService {
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFounException(
-				"Object not found Id: " + id + ", Tipo: " + Pedido.class.getName(), null));
+				"Object not found Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 	
 	public Pedido insert(Pedido obj) {

@@ -30,17 +30,22 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	
 	@Column(unique=true)
 	private String email;
 	private String cpfOrCnpj;
 	private Integer clientType;
+	
 	@JsonIgnore
 	private String password;
+	
 	@OneToMany(mappedBy= "client", cascade=CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
+	
 	@ElementCollection
 	@CollectionTable(name= "Phone")
 	private Set<String> phones = new HashSet<>();
+	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PROFILE")
 	private Set<Integer> profiles = new HashSet<>();
@@ -48,6 +53,14 @@ public class Client implements Serializable {
 	@OneToMany(mappedBy="client")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 	public Client() {
 		addProfile(Profile.CLIENT);
 	}
@@ -135,14 +148,6 @@ public class Client implements Serializable {
 
 	public void setPhones(Set<String> phones) {
 		this.phones = phones;
-	}
-
-	public List<Pedido> getOrders() {
-		return pedidos;
-	}
-
-	public void setOrders(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
 	}
 
 	public void setClientType(Integer clientType) {

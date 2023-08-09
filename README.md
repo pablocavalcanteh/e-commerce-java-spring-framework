@@ -14,6 +14,6 @@ This' an e-commerce project built up with the following technologies:
 - Maven
 - And other stuff...
 
-Go on and explore more! 👨‍💻 🤘
+Go ahead and explore more! 👨‍💻 🤘
 
 That's it. 👋
